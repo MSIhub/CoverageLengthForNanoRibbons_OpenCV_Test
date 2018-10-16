@@ -6,21 +6,61 @@
 
 # Imports
 import cv2
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 
 # reading image
-img = cv2.imread('im/in/fig1.png', cv2.IMREAD_GRAYSCALE)
+#img = cv2.imread('im/in/fig1.png', cv2.IMREAD_GRAYSCALE)
+
+img1LowIn = cv2.imread('im/in/pic1Low.png', cv2.IMREAD_GRAYSCALE)
+img1MedIn = cv2.imread('im/in/pic2Med.png', cv2.IMREAD_GRAYSCALE)
+img1HighIn = cv2.imread('im/in/pic3High.png', cv2.IMREAD_GRAYSCALE)
 
 # processing
 
-edgeCanny = cv2.Canny(img,100,100)
+img1LowOut = cv2.Canny(img1LowIn, 100, 150)
+img1MedOut = cv2.Canny(img1MedIn, 100, 100)
+img1HighOut = cv2.Canny(img1HighIn, 100, 100)
 
+height = np.size(img1LowIn, 0)
+width = np.size(img1LowIn, 1)
+print(height)
+print(width)
+
+print(img1LowIn.shape)
+print(img1LowIn.size)
+print(img1LowIn.dtype)
+
+
+
+# Plotting 3d image
+##
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+x = np.arange(0,height)
+y = np.arange(0,width)
+z = img1LowIn[x,y]
+ax.scatter(x, y, z)
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+plt.show()
+##
 # showing image in cv
 ##
-cv2.imshow('image', img)
-cv2.imshow('edgeCanny',edgeCanny)
+cv2.imshow('img1LowIn', img1LowIn)
+#cv2.imshow('img1MedIn', img1MedIn)
+#cv2.imshow('img1HighIn', img1HighIn)
+
+cv2.imshow('img1LowOut', img1LowOut)
+#cv2.imshow('img1MedOut', img1MedOut)
+#cv2.imshow('img1HighOut', img1HighOut)
+
 cv2.waitKey(0)  # waits for any key
-cv2.destroyallwindows()     # close the image
+cv2.destroyAllWindows()     # close the image
 ##
+
 
 
 
